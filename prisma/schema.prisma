@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String  @id @default(uuid())
+  name      String
+  email     String  @unique
+  avatarUrl String?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  files     File[]
+  authLinks AuthLink[]
+
+  @@map("users")
+}
+
+model File {
+  id          String     @id @default(cuid())
+  name        String
+  key         String     @unique
+  contentType String
+  size        String
+  slug        String
+  status      FileStatus @default(PROCESSING)
+
+  createdAt DateTime  @default(now())
+  expiresAt DateTime?
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  @@map("files")
+}
+
+enum FileStatus {
+  VALID
+  PROCESSING
+  EXPIRED
+}
+
+model AuthLink {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  createdAt DateTime @default(now())
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  @@map("auth_links")
+}

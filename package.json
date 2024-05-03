@@ -1,0 +1,43 @@
+{
+  "name": "upload.video",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "20"
+  },
+  "scripts": {
+    "dev": "tsx watch --env-file .env src/http/server.ts",
+    "build": "tsup src --format esm",
+    "vercel-build": "npx prisma migrate deploy && prisma generate && tsup src --format esm",
+    "start": "node dist/http/server.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.554.0",
+    "@aws-sdk/s3-request-presigner": "^3.554.0",
+    "@fastify/cookie": "^9.3.1",
+    "@fastify/cors": "^9.0.1",
+    "@fastify/jwt": "^8.0.0",
+    "@prisma/client": "^5.12.1",
+    "@react-email/components": "^0.0.16",
+    "dayjs": "^1.11.10",
+    "fastify": "^4.26.2",
+    "fastify-plugin": "^4.5.1",
+    "lucide-react": "^0.368.0",
+    "nanoid": "^3.3.5",
+    "react": "^18.2.0",
+    "resend": "^3.2.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "@types/react": "^18.2.78",
+    "prisma": "^5.12.1",
+    "tsup": "^8.0.2",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5"
+  }
+}
