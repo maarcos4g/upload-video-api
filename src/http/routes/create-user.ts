@@ -30,6 +30,6 @@ export async function createUser(app: FastifyInstance) {
       }
     })
 
-    return reply.status(201)
+    return reply.status(201).send({ userId: user.id })
   })
 }
