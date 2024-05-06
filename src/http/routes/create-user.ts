@@ -2,7 +2,6 @@ import { db } from "@/db/connection";
 import { FastifyInstance } from "fastify";
 import { z } from "zod";
 import { BadRequest } from "./_errors/bad-request";
-import { userPayload } from "@/utils/auth";
 
 export async function createUser(app: FastifyInstance) {
   app.post('/user', async ({ body }, reply) => {
@@ -30,6 +29,6 @@ export async function createUser(app: FastifyInstance) {
       }
     })
 
-    return reply.status(201)
+    return reply.status(201).send({ userId: user.id })
   })
 }

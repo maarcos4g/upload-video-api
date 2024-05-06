@@ -19,6 +19,7 @@ import { signOut } from "./routes/sign-out"
 import { getProfile } from "./routes/get-profile"
 import { getFileDetails } from "./routes/get-file-details"
 import { updateFile } from "./routes/update-file"
+import { getUsage } from "./routes/get-usage"
 
 const app = fastify()
 
@@ -53,11 +54,13 @@ app.register(signOut)
 app.register(getProfile)
 app.register(getFileDetails)
 app.register(updateFile)
+app.register(expiredFileAutomatically)
+app.register(getUsage)
 
 app.setErrorHandler(errorHandler)
 
-expiredFileAutomatically()
-  .then()
+// expiredFileAutomatically()
+//   .then()
 
 app.listen({
   port: 3333,

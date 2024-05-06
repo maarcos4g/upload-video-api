@@ -25,9 +25,11 @@ export async function getAllFiles(app: FastifyInstance) {
           userId,
           name: {
             contains: searchQuery
-          }
+          },
+          deletedAt: null,
         } : {
           userId,
+          deletedAt: null,
         },
         take: 8,
         skip: pageIndex * 8,

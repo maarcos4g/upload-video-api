@@ -23,10 +23,19 @@ export async function deleteFileById(app: FastifyInstance) {
       throw new BadRequest('File not found.')
     }
 
-    await db.file.delete({
+    await db.file.update({
       where: {
-        id,
+        id: file.id
+      },
+      data: {
+        deletedAt: new Date()
       }
     })
+
+    // await db.file.delete({
+    //   where: {
+    //     id,
+    //   }
+    // })
   })
 }
