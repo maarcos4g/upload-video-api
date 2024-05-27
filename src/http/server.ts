@@ -20,6 +20,7 @@ import { getProfile } from "./routes/get-profile"
 import { getFileDetails } from "./routes/get-file-details"
 import { updateFile } from "./routes/update-file"
 import { getUsage } from "./routes/get-usage"
+import { updateUserProfile } from "./routes/update-user-profile"
 
 const app = fastify()
 
@@ -56,6 +57,7 @@ app.register(getFileDetails)
 app.register(updateFile)
 app.register(expiredFileAutomatically)
 app.register(getUsage)
+app.register(updateUserProfile)
 
 app.setErrorHandler(errorHandler)
 

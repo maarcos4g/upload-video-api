@@ -41,6 +41,7 @@ export async function getAllFiles(app: FastifyInstance) {
       await db.file.count({
         where: {
           userId,
+          deletedAt: null
         }
       })
     ])

@@ -1,12 +1,13 @@
 import { db } from "@/db/connection";
 import dayjs from "dayjs";
+import { FastifyInstance } from "fastify";
 
-export async function expiredFileAutomatically() {
+export async function expiredFileAutomatically(app: FastifyInstance) {
 
   const fourteenDaysAgo = dayjs(new Date()).subtract(14, 'day').toDate();
 
-  setTimeout(async () => {
-    const [files] = await Promise.all([
+  app.get('/expired-all', async (request, reply) => {
+    const [files, expiredCount] = await Promise.all([
       db.file.findMany({
         where: {
           createdAt: {
@@ -14,7 +15,7 @@ export async function expiredFileAutomatically() {
           }
         },
       }),
-  
+
       db.file.updateMany({
         where: {
           createdAt: {
@@ -27,8 +28,33 @@ export async function expiredFileAutomatically() {
       })
     ])
 
-    console.log(`🔥 Found ${files.length} files created in 14 days ago.`)
+    return { expiredCount, files }
+  })
 
-    expiredFileAutomatically()
-  }, 1000 * 60 * 60 * 12) // 12h
+  // setTimeout(async () => {
+  //   const [files] = await Promise.all([
+  //     db.file.findMany({
+  //       where: {
+  //         createdAt: {
+  //           lte: fourteenDaysAgo
+  //         }
+  //       },
+  //     }),
+
+  //     db.file.updateMany({
+  //       where: {
+  //         createdAt: {
+  //           lte: fourteenDaysAgo
+  //         }
+  //       },
+  //       data: {
+  //         status: 'EXPIRED'
+  //       }
+  //     })
+  //   ])
+
+  //   console.log(`🔥 Found ${files.length} files created in 14 days ago.`)
+
+  //   expiredFileAutomatically()
+  // }, 1000 * 60 * 60 * 12) // 12h
 }

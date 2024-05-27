@@ -22,7 +22,7 @@ export async function sendAuthenticationLink(app: FastifyInstance) {
     })
 
     if (!userFromEmail) {
-      throw new BadRequest('The user not found')
+      throw new BadRequest('User not found.')
     }
 
     const createId = customAlphabet('1234567890abcdef', 12)
